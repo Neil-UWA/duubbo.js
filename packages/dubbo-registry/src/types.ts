@@ -26,6 +26,8 @@ export interface ITimeoutProps {
 export interface INaocsClientProps {
   namespace?: string
   connect: string
+  password?: string
+  username?: string
   logger: Console
 }
 export interface IRegistrySubscriber {
