@@ -132,7 +132,11 @@ export class NacosRegistry
     const dubboInterfaces = new Set<string>()
     for (let { dubboServiceInterface, dubboServiceUrl } of consumers) {
       dubboInterfaces.add(dubboServiceInterface)
-      await this.registerInstance(dubboServiceInterface, dubboServiceUrl)
+      const serviceName = await this.registerInstance(
+        dubboServiceInterface,
+        dubboServiceUrl
+      )
+      dubboInterfaces.add(serviceName)
     }
     await this.findDubboServiceUrls([...dubboInterfaces])
   }
@@ -141,18 +145,23 @@ export class NacosRegistry
     dubboServiceInterface: string,
     dubboServiceUrl: string
   ) {
-    const metadata = {}
+    const metadata: Record<string, string> = {}
     const urlObj = new URL(dubboServiceUrl)
     dlog('urlObj => %O', urlObj)
     const { hostname: ip, port, searchParams } = urlObj
     for (const key of searchParams.keys()) {
       metadata[key] = searchParams.get(key)
     }
-    await this.client.registerInstance(dubboServiceInterface, {
+    const serviceName = `${
+      metadata.side === 'provider' ? 'providers:' : 'consumers:'
+    }${dubboServiceInterface}:${metadata.version}:${metadata.group}`
+
+    await this.client.registerInstance(serviceName, {
       ip,
       port: port || 80,
       metadata
     })
+    return serviceName
   }
 
   close(): void {
