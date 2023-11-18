@@ -229,7 +229,7 @@ export default class Scheduler {
       ctx.request.dubboVersion ||
       url.dubboVersion ||
       DEFAULT_DUBBO_PROTOCOL_VERSION
-    ctx.request.path = url.path
+    ctx.request.path = url.path.replace(/^providers:/, '').split(':')[0]
     transport.write(ctx)
   }
 

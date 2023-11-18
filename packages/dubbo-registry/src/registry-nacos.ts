@@ -102,7 +102,10 @@ export class NacosRegistry
         const inf = serviceName.split('@@')[1]
         return `beehive://${ip}:${port}/${inf}?${qs.stringify(metadata)}`
       })
-      this.dubboServiceUrlMap.set(dubboInterface, urls)
+      const serviceName = dubboInterface
+        .replace(/^providers:/, '')
+        .split(':')[0]
+      this.dubboServiceUrlMap.set(serviceName, urls)
       dlog('urls => %O', urls)
       this.emitData(this.dubboServiceUrlMap)
     })
@@ -131,12 +134,13 @@ export class NacosRegistry
     dlog('consumers => %O', consumers)
     const dubboInterfaces = new Set<string>()
     for (let { dubboServiceInterface, dubboServiceUrl } of consumers) {
-      dubboInterfaces.add(dubboServiceInterface)
       const serviceName = await this.registerInstance(
         dubboServiceInterface,
         dubboServiceUrl
       )
-      dubboInterfaces.add(serviceName)
+      if (serviceName.startsWith('consumers:')) {
+        dubboInterfaces.add(serviceName.replace('consumers:', 'providers:'))
+      }
     }
     await this.findDubboServiceUrls([...dubboInterfaces])
   }
@@ -152,10 +156,7 @@ export class NacosRegistry
     for (const key of searchParams.keys()) {
       metadata[key] = searchParams.get(key)
     }
-    const serviceName = `${
-      metadata.side === 'provider' ? 'providers:' : 'consumers:'
-    }${dubboServiceInterface}:${metadata.version}:${metadata.group}`
-
+    const serviceName = `${metadata.category}:${dubboServiceInterface}:${metadata.version}:${metadata.group}`
     await this.client.registerInstance(serviceName, {
       ip,
       port: port || 80,
