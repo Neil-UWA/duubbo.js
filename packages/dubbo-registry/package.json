@@ -1,6 +1,6 @@
 {
   "name": "apache-dubbo-registry",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
   "license": "Apache Licence 2.0",
