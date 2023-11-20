@@ -20,6 +20,11 @@
   "publishConfig": {
     "registry": "http://nexus.goluckyvip-inc.com/repository/npm-repository/"
   },
+  "files": [
+    "lib",
+    "src",
+    "package.json"
+  ],
   "dependencies": {
     "debug": "3.1.0",
     "get-port": "^5.1.1",
