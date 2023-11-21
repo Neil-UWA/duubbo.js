@@ -49,10 +49,12 @@ export class DubboSetting {
     } else if (rule instanceof RegExp) {
       this.matchDubboRegx.set(rule, meta)
     }
+    return this
   }
 
   serviceThunk(thunk: TMatchThunk) {
     this.matchDubboThunk.add(thunk)
+    return this
   }
 
   getDubboSetting({
@@ -130,3 +132,5 @@ export function serviceThunk(thunk: TMatchThunk) {
     dubboSetting.serviceThunk(thunk)
   }
 }
+
+export const dubboSetting = new DubboSetting()
