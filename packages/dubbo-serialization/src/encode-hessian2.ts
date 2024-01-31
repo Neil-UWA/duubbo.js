@@ -45,6 +45,13 @@ const checkPayload = (payload: number) => {
   }
 }
 
+const stringify = (data, ...args) =>
+  JSON.stringify(
+    data,
+    (_key: string, value: any) =>
+      typeof value === 'bigint' ? value.toString() : value,
+    ...args
+  )
 //dubbo hessian serialization
 //com.alibaba.dubbo.remoting.exchange.codec.ExchangeCodec
 //encodeRequest
@@ -54,10 +61,7 @@ export class DubboRequestEncoder {
 
   constructor(ctx: IRequestContext) {
     this.ctx = ctx
-    log(
-      'dubbo encode param request:%s',
-      JSON.stringify(this.ctx.request, null, 2)
-    )
+    log('dubbo encode param request:%s', stringify(this.ctx.request, null, 2))
   }
 
   encode() {
@@ -117,13 +121,8 @@ export class DubboRequestEncoder {
     //hessian v2
     const encoder = new Hessian.EncoderV2()
 
-    const {
-      dubboVersion,
-      dubboInterface,
-      version,
-      methodName,
-      methodArgs
-    } = this.ctx
+    const { dubboVersion, dubboInterface, version, methodName, methodArgs } =
+      this.ctx
 
     //dubbo version
     encoder.write(dubboVersion)
@@ -235,7 +234,7 @@ export class DubboRequestEncoder {
     log(
       'request#%d attachment %s',
       requestId,
-      JSON.stringify(attachmentsHashMap, null, 2)
+      stringify(attachmentsHashMap, null, 2)
     )
 
     return attachmentsHashMap
