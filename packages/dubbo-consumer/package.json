@@ -1,6 +1,6 @@
 {
   "name": "apache-dubbo-consumer",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
   "license": "Apache Licence 2.0",
@@ -33,7 +33,7 @@
     "js-to-java": "2.4.0",
     "koa-compose": "4.0.0",
     "apache-dubbo-common": "^0.0.1",
-    "apache-dubbo-serialization": "^0.0.2",
+    "apache-dubbo-serialization": "^0.0.3",
     "apache-dubbo-registry": "^0.0.2"
   }
 }
