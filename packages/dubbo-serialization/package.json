@@ -1,6 +1,6 @@
 {
   "name": "apache-dubbo-serialization",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
   "license": "Apache Licence 2.0",
@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "apache-dubbo-common": "0.0.1",
-    "hessian.js": "2.11.1-golucky"
+    "hessian.js": "2.11.1-golucky.0"
   }
 }

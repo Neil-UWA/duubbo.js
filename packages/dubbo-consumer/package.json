@@ -1,6 +1,6 @@
 {
   "name": "apache-dubbo-consumer",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "main": "./lib/index.js",
   "types": "./lib/typings/index.d.ts",
   "license": "Apache Licence 2.0",
@@ -28,12 +28,12 @@
   "dependencies": {
     "debug": "3.1.0",
     "get-port": "^5.1.1",
-    "hessian.js": "2.11.1-golucky",
+    "hessian.js": "2.11.1-golucky.0",
     "ip": "1.1.5",
     "js-to-java": "2.4.0",
     "koa-compose": "4.0.0",
     "apache-dubbo-common": "^0.0.1",
-    "apache-dubbo-serialization": "^0.0.5",
+    "apache-dubbo-serialization": "^0.0.6",
     "apache-dubbo-registry": "^0.0.2"
   }
 }
